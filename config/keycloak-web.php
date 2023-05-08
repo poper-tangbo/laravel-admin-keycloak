@@ -51,7 +51,7 @@ return [
      */
     'redirect_url' => '/admin',
 
-    'redirect_logout' => url('/admin'),
+    'redirect_logout' => env('APP_URL') . '/admin',
 
     /**
      * The routes for authenticate
@@ -70,9 +70,9 @@ return [
     ],
 
     /**
-    * GuzzleHttp Client options
-    *
-    * @link http://docs.guzzlephp.org/en/stable/request-options.html
-    */
-   'guzzle_options' => [],
+     * GuzzleHttp Client options
+     *
+     * @link http://docs.guzzlephp.org/en/stable/request-options.html
+     */
+    'guzzle_options' => [],
 ];

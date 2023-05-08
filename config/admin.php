@@ -146,6 +146,7 @@ return [
         'excepts' => [
             'auth/login',
             'auth/logout',
+            'test',
         ],
     ],
 
