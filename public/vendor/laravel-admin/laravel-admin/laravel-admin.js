@@ -118,7 +118,7 @@ $(function () {
     });
 
     // 禁止退出按钮冒泡
-    $('.navbar-custom-menu .navbar-nav .dropdown-menu li.user-footer .pull-right a').click(function (event) {
+    $('.navbar-custom-menu .navbar-nav .dropdown-menu li.user-footer a').click(function (event) {
         event.stopPropagation()
     })
 });
