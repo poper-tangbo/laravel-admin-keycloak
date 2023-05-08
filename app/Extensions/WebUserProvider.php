@@ -3,7 +3,6 @@
 namespace App\Extensions;
 
 use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Support\Facades\Log;
 use Vizir\KeycloakWebGuard\Auth\KeycloakWebUserProvider;
 
 class WebUserProvider extends KeycloakWebUserProvider
