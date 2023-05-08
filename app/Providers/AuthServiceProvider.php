@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+use App\Extensions\AdminUserProvider;
 use App\Extensions\WebUserProvider;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -26,6 +27,9 @@ class AuthServiceProvider extends ServiceProvider
     {
         Auth::provider('web-user', function (Application $app, array $config) {
             return new WebUserProvider($config['model']);
+        });
+        Auth::provider('admin-user', function (Application $app, array $config) {
+            return new AdminUserProvider($config['model']);
         });
     }
 }

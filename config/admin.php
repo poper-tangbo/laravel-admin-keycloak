@@ -112,18 +112,26 @@ return [
 
         'controller' => App\Admin\Controllers\AuthController::class,
 
-        'guard' => 'admin',
+        'guard' => 'admin-user',
 
         'guards' => [
             'admin' => [
                 'driver'   => 'session',
                 'provider' => 'admin',
             ],
+            'admin-user' => [
+                'driver'   => 'keycloak-web',
+                'provider' => 'admin-user',
+            ],
         ],
 
         'providers' => [
             'admin' => [
                 'driver' => 'eloquent',
+                'model'  => Encore\Admin\Auth\Database\Administrator::class,
+            ],
+            'admin-user' => [
+                'driver' => 'admin-user',
                 'model'  => Encore\Admin\Auth\Database\Administrator::class,
             ],
         ],

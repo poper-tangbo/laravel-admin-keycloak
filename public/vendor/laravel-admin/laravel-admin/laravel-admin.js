@@ -116,6 +116,11 @@ $(function () {
     $('.sidebar-form .dropdown-menu li a').click(function (){
         $('.sidebar-form .autocomplete').val($(this).text());
     });
+
+    // 禁止退出按钮冒泡
+    $('.navbar-custom-menu .navbar-nav .dropdown-menu li.user-footer .pull-right a').click(function (event) {
+        event.stopPropagation()
+    })
 });
 
 $(window).scroll(function() {

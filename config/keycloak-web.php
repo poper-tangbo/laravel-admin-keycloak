@@ -49,7 +49,9 @@ return [
      *
      * @see Vizir\KeycloakWebGuard\Controllers\AuthController::callback()
      */
-    'redirect_url' => '/home',
+    'redirect_url' => '/admin',
+
+    'redirect_logout' => url('/admin'),
 
     /**
      * The routes for authenticate
