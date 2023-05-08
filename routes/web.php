@@ -3,6 +3,7 @@
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Vizir\KeycloakWebGuard\Facades\KeycloakWeb;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('register', function () {
+    $url = KeycloakWeb::getRegisterUrl();
+    KeycloakWeb::saveState();
+    return redirect($url);
+})->name('keycloak.register');
 
 Route::middleware('auth')->get('home', function () {
     /** @var User $user */
