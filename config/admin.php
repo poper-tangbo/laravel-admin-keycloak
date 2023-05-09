@@ -146,7 +146,6 @@ return [
         'excepts' => [
             'auth/login',
             'auth/logout',
-            'test',
         ],
     ],
 
@@ -248,7 +247,7 @@ return [
     | Indicates whether to check menu roles.
     |--------------------------------------------------------------------------
     */
-    'check_menu_roles'       => true,
+    'check_menu_roles'       => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -338,7 +337,7 @@ return [
     |
     | whether enable menu bind to a permission
     */
-    'menu_bind_permission' => true,
+    'menu_bind_permission' => false,
 
     /*
     |--------------------------------------------------------------------------
