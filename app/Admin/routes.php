@@ -11,7 +11,7 @@ Route::group([
     'as'            => config('admin.route.prefix') . '.',
 ], function (Router $router) {
     $router->get('/', 'HomeController@index')->name('home');
-    $router->get('/test', 'TestController@test')->name('test');
-    $router->get('/test1', 'TestController@test1')->name('test1');
-    $router->get('/test2', 'TestController@test2')->name('test2');
+    $router->get('/test', 'TestController@index');
+    $router->get('/test1', 'Test1Controller@index');
+    $router->get('/test2', 'Test2Controller@index');
 });

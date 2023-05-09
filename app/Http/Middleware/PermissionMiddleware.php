@@ -24,7 +24,10 @@ class PermissionMiddleware extends Permission
 
         $credentials = KeycloakWeb::retrieveToken();
         $baseUrl = sprintf('%s/realms/%s', trim(config('keycloak-web.base_url'), '/'), config('keycloak-web.realm'));
-        $permission = sprintf('/%s#%s', request()->path(), request()->method());
+        $controllerName = class_basename($request->route()->getControllerClass());
+        $controllerName = strtolower(str_replace('Controller', '', $controllerName));
+        $method = $request->route()->getActionMethod();
+        $permission = sprintf('%s#%s', $controllerName, $method);
         $response = Http::baseUrl($baseUrl)
             ->withToken($credentials['access_token'])
             ->asForm()
