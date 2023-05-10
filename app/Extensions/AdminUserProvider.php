@@ -16,13 +16,14 @@ class AdminUserProvider extends WebUserProvider
             ->where('username', $credentials['preferred_username'])
             ->first();
         $name = $credentials['family_name'] . $credentials['given_name'];
-        $user->name = $name;
         if (empty($user)) {
             $user = $this->createModel();
             $user->username = $credentials['preferred_username'];
             $user->name = $name;
             $user->password = 'no-password';
             $user->save();
+        } else {
+            $user->name = $name;
         }
         return $user;
     }
