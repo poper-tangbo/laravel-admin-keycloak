@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Oauth2Controller;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -47,4 +48,11 @@ Route::middleware('auth')->get('home', function () {
 EOT;
 
     return response($content);
+});
+
+Route::group(['prefix' => 'oauth2'], function () {
+    Route::get('sign_in', [Oauth2Controller::class, 'signIn']);
+    Route::get('sign_out', [Oauth2Controller::class, 'signOut']);
+    Route::get('callback', [Oauth2Controller::class, 'callback']);
+    Route::get('auth', [Oauth2Controller::class, 'auth']);
 });
