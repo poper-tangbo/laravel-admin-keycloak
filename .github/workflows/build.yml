@@ -1,0 +1,91 @@
+name: Build
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - name: Get env configs # 模拟环境配置，后期使用接口从配置中心获取
+        run: |
+          cat > staging.env <<EOF
+          APP_NAME=Laravel
+          APP_ENV=local
+          APP_KEY=base64:lIG2TxH/rAVb019PKu1/CQjDcAcLo3KrLxLqp1DsS6Y=
+          APP_DEBUG=true
+          APP_LOG_LEVEL=debug
+          APP_URL=http://localhost
+
+          DB_CONNECTION=mysql
+          DB_HOST=127.0.0.1
+          DB_PORT=3306
+          DB_DATABASE=homestead
+          DB_USERNAME=homestead
+          DB_PASSWORD=secret
+
+          BROADCAST_DRIVER=log
+          CACHE_DRIVER=file
+          SESSION_DRIVER=file
+          SESSION_LIFETIME=120
+          QUEUE_DRIVER=sync
+
+          REDIS_HOST=127.0.0.1
+          REDIS_PASSWORD=null
+          REDIS_PORT=6379
+
+          MAIL_DRIVER=smtp
+          MAIL_HOST=smtp.mailtrap.io
+          MAIL_PORT=2525
+          MAIL_USERNAME=null
+          MAIL_PASSWORD=null
+          MAIL_ENCRYPTION=null
+
+          PUSHER_APP_ID=
+          PUSHER_APP_KEY=
+          PUSHER_APP_SECRET=
+          PUSHER_APP_CLUSTER=mt1
+
+          LINE_CHANNEL_ID=
+          LINE_CHANNEL_SECRET=
+          LINE_REDIRECT=
+          LINE_BOT_CHANNEL_ACCESS_TOKEN=
+          LINE_BOT_CHANNEL_SECRET=
+
+          TEST_ENV=tangbo
+          EOF
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-southeast-2
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: Compile
+        env:
+          STACK: 22
+          REGISTRY: 260458320167.dkr.ecr.ap-southeast-2.amazonaws.com
+          REPOSITORY: heroku
+          BUILDPACK: https://github.com/heroku/heroku-buildpack-php
+        run: |
+          docker run \
+            --env-file staging.env \
+            -v "$(pwd)":/app \
+            -e STACK=heroku-$STACK \
+            $REGISTRY/$REPOSITORY:$STACK-build \
+            sh -c "git clone $BUILDPACK /tmp/buildpack && /tmp/buildpack/bin/compile /app /tmp/cache"
+      - name: Get current time
+        id: time
+        run: echo "now=$(date -u '+%Y%m%d.%H%M%S')" >> $GITHUB_OUTPUT
+      - name: Build and Push
+        env:
+          REGISTRY: 260458320167.dkr.ecr.ap-southeast-2.amazonaws.com
+          REPOSITORY: demo
+          IMAGE_TAG: ${{ steps.time.outputs.now }}
+        run: |
+          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
+          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
