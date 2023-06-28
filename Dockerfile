@@ -1,4 +1,4 @@
-FROM 260458320167.dkr.ecr.ap-southeast-2.amazonaws.com/heroku:22
+FROM 701150702050.dkr.ecr.ap-northeast-1.amazonaws.com/heroku:22
 
 COPY . /app
 
