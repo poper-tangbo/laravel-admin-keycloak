@@ -14,7 +14,7 @@ phases:
             --environment-identifier production \
             --configuration-profile-identifier main --no-cli-pager --output text) \
           --no-cli-pager \
-          staging.env \
+          .env \
           > /dev/null 2>&1
   build:
     commands:
@@ -22,7 +22,7 @@ phases:
       - echo Building the Docker image...
       - |
         docker run \
-          --env-file staging.env \
+          --env-file .env \
           -v "$(pwd)":/app \
           -e STACK=heroku-22 \
           701150702050.dkr.ecr.ap-northeast-1.amazonaws.com/heroku:22-build \
