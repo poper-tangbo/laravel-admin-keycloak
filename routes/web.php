@@ -18,6 +18,8 @@ use Vizir\KeycloakWebGuard\Facades\KeycloakWeb;
 
 Route::get('healthy', fn() => 'ok');
 
+Route::get('t', fn() => '1688975013');
+
 Route::get('/', function () {
     return view('welcome');
 });
