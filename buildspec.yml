@@ -31,7 +31,7 @@ phases:
         tagname=701150702050.dkr.ecr.ap-northeast-1.amazonaws.com/pipeline-build-demo:$(date -u '+%Y%m%d.%H%M%S')
         docker build -t $tagname .
         docker push $tagname
-        printf '[{"name":"pipeline-build-demo","imageUri":"%s"}]' $tagname > imagedefinitions.json
+        printf '[{"name":"lak","imageUri":"%s"}]' $tagname > imagedefinitions.json
       - echo Build Done
 artifacts:
   files: imagedefinitions.json
