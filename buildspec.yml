@@ -29,8 +29,11 @@ phases:
           sh -c "git clone https://github.com/heroku/heroku-buildpack-php /tmp/buildpack && /tmp/buildpack/bin/compile /app /tmp/cache"
       - |
         tagname=701150702050.dkr.ecr.ap-northeast-1.amazonaws.com/pipeline-build-demo:$(date -u '+%Y%m%d.%H%M%S')
+        clitag=701150702050.dkr.ecr.ap-northeast-1.amazonaws.com/pipeline-build-demo:cli
         docker build -t $tagname .
         docker push $tagname
+        docker tag $tagname $clitag
+        docker push $clitag
         printf '[{"name":"lak","imageUri":"%s"}]' $tagname > imagedefinitions.json
       - echo Build Done
 artifacts:
