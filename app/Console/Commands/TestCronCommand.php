@@ -12,6 +12,6 @@ class TestCronCommand extends Command
 
     public function handle(): void
     {
-        $this->line('v2 test cron job, now at ' . now()->toDateTimeString());
+        $this->line('v3 test cron job, now at ' . now()->toDateTimeString());
     }
 }
